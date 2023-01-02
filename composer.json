@@ -1,0 +1,19 @@
+{
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "armandopagano",
+      "email": "email@example.com"
+    }
+  ],
+  "autoload": {
+    "classmap": ["./"]
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
