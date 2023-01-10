@@ -1,5 +1,5 @@
 <?php
-class SavedCo2{
+class Co2{
     private $conn;
     public $value;
 

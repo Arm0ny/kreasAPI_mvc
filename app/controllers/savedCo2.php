@@ -1,11 +1,11 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
-class SavedCo2Controller extends Controller {
+class SavedCo2 extends Controller {
 
     public function readByDate(){
 
-        $savedCo2 = $this->model('SavedCo2');
-        if($_SERVER['REQUEST_METHOD'] != 'GET' || !isset($_GET['from'], $_GET['to'])) {
+        $savedCo2 = $this->model('Co2');
+        if(!isset($_GET['from'], $_GET['to'])) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -26,9 +26,9 @@ class SavedCo2Controller extends Controller {
     }
 
     public function readByDestCountry(){
-        $savedCo2 = $this->model('SavedCo2');
+        $savedCo2 = $this->model('Co2');
 
-        if($_SERVER['REQUEST_METHOD'] != 'GET' || !isset($_GET["dest_country"])) {
+        if( !isset($_GET["dest_country"])) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -45,9 +45,9 @@ class SavedCo2Controller extends Controller {
     }
 
     public function readByProductId(){
-        $savedCo2 = $this->model('SavedCo2');
+        $savedCo2 = $this->model('Co2');
 
-        if($_SERVER['REQUEST_METHOD'] != 'GET' || !isset($_GET["product_id"])) {
+        if( !isset($_GET["product_id"])) {
             http_response_code(400);
             json_encode(array("message" => "Bad Request"));
         }

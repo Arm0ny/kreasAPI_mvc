@@ -1,6 +1,6 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';;
-class ProductsController extends Controller
+class Products extends Controller
 {
     public function create()
     {
@@ -8,7 +8,7 @@ class ProductsController extends Controller
 
         $product = $this->model('Product');
 
-        if (empty($data->name) || empty($data->co2_value) || $_SERVER['REQUEST_METHOD'] != 'POST') {
+        if (empty($data->name) || empty($data->co2_value)) {
             http_response_code(400);
             echo json_encode(
                 array("message" => "Bad Request")
@@ -39,7 +39,7 @@ class ProductsController extends Controller
         $result = $product->read();
         $res_count = $result->rowCount();
 
-        if ($res_count > 0 && $_SERVER['REQUEST_METHOD'] === 'GET'){
+        if ($res_count > 0){
             $products_array = array();
             $products_array['records'] = array();
 
@@ -66,7 +66,7 @@ class ProductsController extends Controller
         $data = json_decode(file_get_contents("php://input"), true);
         $product = $this->model('Product');
 
-        if (empty($data["id"]) || empty($data["params"]) || $_SERVER['REQUEST_METHOD'] != 'PUT'){
+        if (empty($data["id"]) || empty($data["params"])){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -89,7 +89,7 @@ class ProductsController extends Controller
         $data = json_decode(file_get_contents("php://input"));
         $product = $this->model('Product');
 
-        if(empty($data->id) || $_SERVER['REQUEST_METHOD'] != 'DELETE'){
+        if(empty($data->id)){
             http_response_code(400);
             echo json_encode(
                 array("message" => "Bad Request")
@@ -110,7 +110,6 @@ class ProductsController extends Controller
         echo json_encode(
             array("message" => "OK, Product Successfully Deleted")
         );
-
 
     }
 }

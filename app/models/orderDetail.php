@@ -1,6 +1,6 @@
 <?php
-
-class OrderDetails{
+class OrderDetail
+{
     private $conn;
     private $table_name = "order_details";
 
@@ -9,13 +9,15 @@ class OrderDetails{
     public $order_id;
     public $qty;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function create(){
+    public function create()
+    {
         $res = $this->alreadyInOrder();
-        if(!$res){
+        if (!$res) {
             $query = "INSERT INTO " . $this->table_name . " (order_id, product_id, qty) 
                     VALUES (:order_id, :product_id, :qty)";
 
@@ -31,8 +33,9 @@ class OrderDetails{
         return $this->update();
     }
 
-    public function readByOrderId(){
-        $query = "SELECT od.order_id, p.id, p.name, od.qty FROM ".$this->table_name." od
+    public function readByOrderId()
+    {
+        $query = "SELECT od.order_id, p.id, p.name, od.qty FROM " . $this->table_name . " od
                     INNER JOIN products p ON od.product_id = p.id
                     WHERE od.order_id = :order_id";
 
@@ -41,15 +44,16 @@ class OrderDetails{
 
         $stmt->bindParam('order_id', $this->order_id);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return $stmt;
-        }else{
+        } else {
             return false;
         }
 
     }
 
-    public function update(){
+    public function update()
+    {
         $query = "UPDATE " . $this->table_name . " SET qty = :qty 
                     WHERE order_id = :order_id AND product_id = :product_id";
 
@@ -66,7 +70,8 @@ class OrderDetails{
         return $stmt->execute();
     }
 
-    public function delete(){
+    public function delete()
+    {
         $query = "DELETE FROM " . $this->table_name . " WHERE order_id = :order_id AND product_id = :product_id";
 
         $stmt = $this->conn->prepare($query);
@@ -80,7 +85,8 @@ class OrderDetails{
         return $stmt->execute();
     }
 
-    public function alreadyInOrder(){
+    public function alreadyInOrder()
+    {
         $query = "SELECT qty from order_details od
                     WHERE od.order_id = :order_id AND od.product_id = :product_id";
 
@@ -92,8 +98,8 @@ class OrderDetails{
         $stmt->bindParam('order_id', $this->order_id);
         $stmt->bindParam('product_id', $this->product_id);
 
-        if ($stmt->execute()){
-            if ($stmt->rowCount() > 0){
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
                 return $stmt;
             }
         }

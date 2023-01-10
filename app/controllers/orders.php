@@ -1,12 +1,12 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
 
-class OrdersController extends Controller{
+class Orders extends Controller{
     public function create(){
         $order = $this->model('Order');
         $data = json_decode(file_get_contents("php://input"));
 
-        if(empty($data->dest_country) || $_SERVER['REQUEST_METHOD'] != 'POST') {
+        if(empty($data->dest_country)) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -26,7 +26,7 @@ class OrdersController extends Controller{
 
     public function read(){
         $order = $this->model('Order');
-        $orderDetails = $this->model('OrderDetails');
+        $orderDetails = $this->model('OrderDetail');
 
         if (isset($_GET["order_by"])){
             $order->order_by = $_GET["order_by"];
@@ -38,7 +38,7 @@ class OrdersController extends Controller{
         $res = $order->read();
         $res_count = $res->rowCount();
 
-        if ($res_count > 0 && $_SERVER['REQUEST_METHOD'] === 'GET'){
+        if ($res_count > 0){
             $orders_array = array();
             $orders_array['records'] = array();
 
@@ -83,9 +83,9 @@ class OrdersController extends Controller{
         $data = json_decode(file_get_contents("php://input"), true);
 
         $order = $this->model('Order');
-        $orderDetails = $this->model('OrderDetails');
+        $orderDetails = $this->model('OrderDetail');
 
-        if(empty($data["id"]) || empty($data["params"]) || $_SERVER['REQUEST_METHOD'] != 'PUT'){
+        if(empty($data["id"]) || empty($data["params"])){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -106,7 +106,7 @@ class OrdersController extends Controller{
         $data = json_decode(file_get_contents("php://input"));
         $order = $this->model('Order');
 
-        if(empty($data->id) || $_SERVER['REQUEST_METHOD'] != 'DELETE'){
+        if(empty($data->id)){
             http_response_code(400);
             echo json_encode(
                 array("message" => "Bad Request"));

@@ -1,12 +1,12 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
-class OrderDetailsController extends Controller {
+class OrderDetails extends Controller {
     public function create(){
-        $orderDetails = $this->model('OrderDetails');
+        $orderDetails = $this->model('OrderDetail');
         $order = $this->model('Order');
         $data = json_decode(file_get_contents("php://input"));
 
-        if(empty($data->order_id) || empty($data->product_id) || empty($data->qty) || $_SERVER['REQUEST_METHOD'] != 'POST'){
+        if(empty($data->order_id) || empty($data->product_id) || empty($data->qty)){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -29,11 +29,11 @@ class OrderDetailsController extends Controller {
     }
 
     public function update(){
-        $orderDetails = $this->model('OrderDetails');
+        $orderDetails = $this->model('OrderDetail');
         $data = json_decode(file_get_contents("php://input"));
         $order = $this->model('Order');
 
-        if($_SERVER['REQUEST_METHOD'] =! 'PUT' || empty($data->order_id) || empty($data->product_id) || empty($data->qty)){
+        if(empty($data->order_id) || empty($data->product_id) || empty($data->qty)){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
             die();
@@ -55,11 +55,11 @@ class OrderDetailsController extends Controller {
     }
 
     public function delete(){
-        $orderDetails = $this->model('OrderDetails');
+        $orderDetails = $this->model('OrderDetail');
         $data = json_decode(file_get_contents("php://input"));
         $order = $this->model('Order');
 
-        if($_SERVER['REQUEST_METHOD'] != 'DELETE' || empty($data->order_id) || empty($data->product_id)){
+        if(empty($data->order_id) || empty($data->product_id)){
             http_response_code(400);
             echo json_encode(
                 array("message" => "Bad Request")
