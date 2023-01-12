@@ -8,14 +8,14 @@ class SavedCo2 extends Controller {
         if(!isset($_GET['from'], $_GET['to'])) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
 
         $res = $savedCo2->readByDate($_GET['from'], $_GET['to']);
             if(!$res){
                 http_response_code(500);
                 echo json_encode(array("message" => "Internal Server Error"));
-                die();
+                return null;
             }
             http_response_code(200);
             $row = $res->fetchAll(PDO::FETCH_ASSOC);http_response_code(200);
@@ -31,13 +31,13 @@ class SavedCo2 extends Controller {
         if( !isset($_GET["dest_country"])) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
             $res = $savedCo2->readByCountry($_GET["dest_country"]);
             if(!$res){
                 http_response_code(500);
                 echo json_encode(array("message" => "Internal Server Error"));
-                die();
+                return null;
             }
         $row = $res->fetchAll(PDO::FETCH_ASSOC);
         http_response_code(200);

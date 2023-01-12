@@ -9,14 +9,14 @@ class Orders extends Controller{
         if(empty($data->dest_country)) {
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
 
         $order->dest_country = $data->dest_country;
         if(!$order->create()){
             http_response_code(500);
             echo json_encode(array("message" => "Internal Server Error"));
-            die();
+            return null;
         }
         http_response_code(200);
         echo json_encode(array("message" => "Order Placed Successfully"));
@@ -88,14 +88,14 @@ class Orders extends Controller{
         if(empty($data["id"]) || empty($data["params"])){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
 
         $order->id = $data["id"];
         if (!$order->update($data["params"])) {
             http_response_code(500);
             echo json_encode(array("message" => "Internal Server Error"));
-            die();
+            return null;
         }
         http_response_code(200);
         echo json_encode(array("message" => "OK, Order Successfully Updated"));
@@ -110,7 +110,7 @@ class Orders extends Controller{
             http_response_code(400);
             echo json_encode(
                 array("message" => "Bad Request"));
-            die();
+            return null;
         }
 
         $order->id = $data->id;
@@ -119,7 +119,7 @@ class Orders extends Controller{
             echo json_encode(
                 array("message" => "Internal Server Error")
             );
-            die();
+            return null;
         }
         http_response_code(200);
         echo json_encode(

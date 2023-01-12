@@ -13,7 +13,8 @@ class Products extends Controller
             echo json_encode(
                 array("message" => "Bad Request")
             );
-            die();
+            return null;
+
         }
 
         $product->name = $data->name;
@@ -24,7 +25,7 @@ class Products extends Controller
             echo json_encode(
                 array("message" => "Internal Server Error")
             );
-            die();
+            return null;
         }
 
         http_response_code(201);
@@ -69,14 +70,14 @@ class Products extends Controller
         if (empty($data["id"]) || empty($data["params"])){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
 
         $product->id = $data["id"];
         if (!$product->update($data["params"])) {
             http_response_code(200);
             echo json_encode(array("message" => "Internal Server Error"));
-            die();
+            return null;
 
         }
         http_response_code(200);
@@ -94,7 +95,7 @@ class Products extends Controller
             echo json_encode(
                 array("message" => "Bad Request")
             );
-            die();
+            return null;
         }
 
         $product->id = $data->id;
@@ -103,7 +104,7 @@ class Products extends Controller
             echo json_encode(
                 array("message" => "Internal Server Error")
             );
-            die();
+            return null;
             }
 
         http_response_code(500);

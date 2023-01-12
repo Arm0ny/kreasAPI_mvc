@@ -9,7 +9,7 @@ class OrderDetails extends Controller {
         if(empty($data->order_id) || empty($data->product_id) || empty($data->qty)){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
         $orderDetails->order_id = $data->order_id;
         $orderDetails->product_id = $data->product_id;
@@ -19,7 +19,7 @@ class OrderDetails extends Controller {
         if (!$orderDetails->create()){
             http_response_code(500);
             echo json_encode(array("message" => "Internal Server  Error"));
-            die();
+            return null;
         }
         $order->updateTotalCo2();
         http_response_code(200);
@@ -36,7 +36,7 @@ class OrderDetails extends Controller {
         if(empty($data->order_id) || empty($data->product_id) || empty($data->qty)){
             http_response_code(400);
             echo json_encode(array("message" => "Bad Request"));
-            die();
+            return null;
         }
         $orderDetails->product_id = $data->product_id;
         $orderDetails->qty = $data->qty;
@@ -47,7 +47,7 @@ class OrderDetails extends Controller {
         if(!$orderDetails->update()){
             http_response_code(500);
             echo json_encode(array("message" => "Internal Server Error"));
-            die();
+            return null;
         }
         $order->updateTotalCo2();
         http_response_code(200);
@@ -64,7 +64,7 @@ class OrderDetails extends Controller {
             echo json_encode(
                 array("message" => "Bad Request")
             );
-            die();
+            return null;
         }
         $orderDetails->order_id = $data->order_id;
         $orderDetails->product_id = $data->product_id;
@@ -75,7 +75,7 @@ class OrderDetails extends Controller {
             echo json_encode(
                 array("message" => "Internal Server Error")
             );
-            die();
+            return null;
         }
         $order->updateTotalCo2();
         http_response_code(201);
